@@ -1,0 +1,2 @@
+class Kindbtn < ApplicationRecord
+end

@@ -1,0 +1,79 @@
+{
+	"info": {
+		"_postman_id": "591ed281-6ad9-449f-a65f-92038f390a8d",
+		"name": "davinci",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15071044"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "New Request btns",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://45.174.216.22:4151/btns",
+					"protocol": "http",
+					"host": [
+						"45",
+						"174",
+						"216",
+						"22"
+					],
+					"port": "4151",
+					"path": [
+						"btns"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request btns",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sttus\": 0,\r\n    \"name\": \"botao demo pulso\",\r\n    \"kindbtn_id\": 2\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://45.174.216.22:4151/btns",
+					"protocol": "http",
+					"host": [
+						"45",
+						"174",
+						"216",
+						"22"
+					],
+					"port": "4151",
+					"path": [
+						"btns"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
