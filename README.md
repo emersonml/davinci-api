@@ -12,10 +12,19 @@ ruby 3.0.0p0 (2020-12-25 revision 95aff21468) [x86_64-linux]
     rails new davinci-api --api
     chmod o+w -R davinci
     estamos no git/dev
+
 * System dependencies
 
 * Configuration
+# config/initializers/ams.rb
+  # ActiveModel::Serializer.config.adapter = :json_api
 config.file_watcher = ActiveSupport::FileUpdateChecker  // config/environments
+gem cors | config/initializers/cors.rb
+gem serializers | config/initializers/cors.rb
+
+ controller/application:
+    ensure_json = mime_type
+config/initializers/mime_types.rb  => vnd.api
 
 * Database creation
 comecar pelo model da tem menos dependencia
@@ -36,6 +45,18 @@ rails c => c = Circuit.new => c.save!    ///// testando
 rails g controller devs
 rails g controller btns
 rails g controller circuEXts
+
+* Serializerss creation
+rails g serializer circuit
+rails g serializer btn
+rails g serializer dev
+
+<!-- SETENDO O CAMINHO DO APP PARA QUE OS LINKs DO SERIALIZERS POSSAM ENCONTRAR 
+  Rails.application.routes.default_url_options = {
+    host: 45.174.216.22,
+    port: 4151
+  } -->
+
 
 * How to run the test suite
 

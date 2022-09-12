@@ -45,7 +45,14 @@ class DevsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
+    # def dev_params
+    #   params.require(:dev).permit(:sttus, :name, :tipo)
+    # end
     def dev_params
-      params.require(:dev).permit(:sttus, :name, :tipo)
+      ActiveModelSerializers::Deserialization.jsonapi_parse(params)
     end
+
+
+
+
 end

@@ -6,11 +6,14 @@ class BtnsController < ApplicationController
     @btns = Btn.all
 
     render json: @btns
+
   end
 
   # GET /btns/1
   def show
-    render json: @btn
+    render json: @btn, 
+      include: [:kindbtn]
+      # meta: { author: "Emerson Marques"}
   end
 
   # POST /btns
@@ -44,8 +47,15 @@ class BtnsController < ApplicationController
       @btn = Btn.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    #### Only allow a list of trusted parameters through.
+    # def btn_params
+    #   params.require(:btn).permit(
+    #     :sttus, 
+    #     :name, 
+    #     :kindbtn_id
+    #   )
+    # end
     def btn_params
-      params.require(:btn).permit(:sttus, :name, :kindbtn_id)
+      ActiveModelSerializers::Deserialization.jsonapi_parse(params)
     end
 end
