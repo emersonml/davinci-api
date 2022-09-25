@@ -12,7 +12,7 @@ class CircuitsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create circuit" do
     assert_difference('Circuit.count') do
-      post circuits_url, params: { circuit: { btn_id: @circuit.btn_id, dev_id: @circuit.dev_id, name: @circuit.name, sttus: @circuit.sttus } }, as: :json
+      post circuits_url, params: { circuit: { compartimento_id: @circuit.compartimento_id, description: @circuit.description, kindbtn_id: @circuit.kindbtn_id, kinddev_id: @circuit.kinddev_id, name: @circuit.name, sttus: @circuit.sttus } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class CircuitsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update circuit" do
-    patch circuit_url(@circuit), params: { circuit: { btn_id: @circuit.btn_id, dev_id: @circuit.dev_id, name: @circuit.name, sttus: @circuit.sttus } }, as: :json
+    patch circuit_url(@circuit), params: { circuit: { compartimento_id: @circuit.compartimento_id, description: @circuit.description, kindbtn_id: @circuit.kindbtn_id, kinddev_id: @circuit.kinddev_id, name: @circuit.name, sttus: @circuit.sttus } }, as: :json
     assert_response 200
   end
 

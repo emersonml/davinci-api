@@ -1,15 +1,19 @@
 #  rails -T dev # rails g task dev setup
 #  DISABLE_SPRING=1
+#  spring stop     IMPORTANT!!!
 namespace :dev do
   desc "Configura as migrations "
   task migrations: :environment do
     
-    puts ">>> ATUALIZANDO Migrates ..."
+    puts "Atualiza os DIR: MODEL e SERIALIZERS e ROUTER (Os controller in API nao sao afetados) "
+    puts ">>> spring storp "; %x( spring stop);  puts "end    spring storp "
+    puts ">>> ATUALIZANDO Migrates "
     %x(
+      rails g scaffold patrimonio name tag:integer
+      rails g scaffold compartimento name patrimonio:references
       rails g scaffold kindbtn name 
-      rails g scaffold btn sttus:integer name kindbtn:references
-      rails g scaffold dev sttus:integer name tipo
-      rails g scaffold circuit sttus:integer name btn:references dev:references 
+      rails g scaffold kinddev name 
+      rails g scaffold circuit sttus:integer name description compartimento:references kindbtn:references kinddev:references 
     )
     # rails g scaffold patrimonio name
     # rails g scaffold compartimento name patrimonio:references
@@ -17,57 +21,73 @@ namespace :dev do
     # rails g scaffold pino sttus:integer name tipo pinmode
     # rails g scaffold rele sttus:integer name
     # rails g scaffold circuit sttus:integer name central:references pino:references rele:references dev:references btn:references compartimento:references
-puts "... Migrates ATUALIZANDA. "
-end
+puts "end    Migrates ATUALIZANDA. "
+end   
 
 ######################################################################################################
 
 
 desc "Configura o ambiente de desenvolvimento"
-task populando: :environment do
+task setup: :environment do
   
-  puts ">>> RESETANDO O DB ..."    
+  puts ">>> RESETANDO O DB"    
     %x(rails db:drop db:create db:migrate)
-    
-    
-    puts ">>> Cadastrando os Kind_btn ..."    ### BOTOES
-    nameKindBtns = %w(retencao pulso time)
-    nameKindBtns.each do |namekindbtn|
-      Kindbtn.create!(
-        name: namekindbtn
-      )
-    end
-    puts "... Kind_btn cadastrados"
-    puts ">>> Cadastrando Btn ..."
-      Btn.create!(
-        sttus: 0,
-        name: "botao demo",
-        kindbtn: Kindbtn.first
-      )
-      puts "... Btn cadastrado"
 
-      puts ">>> Cadastrando o Dev ..." ### DISPOSITIVOS
-      Dev.create!(
-        sttus: 0,
-        name: "lampada demo",
-        tipo: "lampada"
-      # kind: Kind.all.sample
+  puts ">>> Cadastrando o Patrimonio" ### PATRIMONIO
+  Patrimonio.create!(
+    name: "5GBrasil",
+    tag: 0
+  )
+  puts "end    Patrimonio cadastrado"
+  puts ">>> Cadastrando o Compartimento" ### COMPARTIMENTO
+  nomecompartimentos = %w(Recepção CPD)
+  nomecompartimentos.each do |nomecompartimento|
+    Compartimento.create!(
+      name: nomecompartimento,
+      patrimonio: Patrimonio.first
     )
-    puts "... Dev cadastrado"
-    
-    puts ">>> Cadastrando Circuit ..."  ### CIRCUITO
-    Circuit.create!(
-      sttus: 0,
-      name: "Circuito1",
-      btn: Btn.first,
-      dev: Dev.first
+  end   
+  puts "end    Compartimento cadastrado"
+  puts ">>> Cadastrando os Kindbtn "    ### KIND BTN
+  nameKindBtns = %w(retencao pulso time)
+  nameKindBtns.each do |namekindbtn|
+    Kindbtn.create!(
+      name: namekindbtn
     )
-    puts "... Circuit cadastrado"
-    
-    
-    
-    
-    puts "... DB RESETADO. "
-  end
+  end   
+  puts "end    Kindbtn cadastrados"
+  puts ">>> Cadastrando os Kinddev "    ### KIND DEV
+  nameKinddevs = %w(fechadura-close sirene lampada portao )
+  nameKinddevs.each do |namekinddev|
+    Kinddev.create!(
+      name: namekinddev
+    )
+  end   
+  puts "end    Kindbtn cadastrados"
+  puts ">>> Cadastrando Circuit "  ### CIRCUITO
+2.times do |i|
+  Circuit.create!(
+    sttus: 0,
+    name: "Circuito#{i+1}",
+    description: "1 fechadura para porta de vidro da recepcao",
+    compartimento: Compartimento.first,
+    kindbtn: Kindbtn.first,
+    kinddev: Kinddev.first
+  )
+end  
 
-end
+    puts "end    Circuit cadastrado"
+    puts "end    DB RESETADO."
+
+    %x( chmod o+w -R ../davinci-api/ )
+    puts ">>> Aplicado permissao de escrita"
+    
+  end   #populando
+end   #dev
+
+
+
+# EXEMPLO
+#   Hero.create name: "Hero #{i}"
+
+

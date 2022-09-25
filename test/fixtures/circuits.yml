@@ -3,11 +3,15 @@
 one:
   sttus: 1
   name: MyString
-  btn: one
-  dev: one
+  description: MyString
+  compartimento: one
+  kindbtn: one
+  kinddev: one
 
 two:
   sttus: 1
   name: MyString
-  btn: two
-  dev: two
+  description: MyString
+  compartimento: two
+  kindbtn: two
+  kinddev: two

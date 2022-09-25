@@ -3,7 +3,8 @@ class CircuitsController < ApplicationController
 
   # GET /circuits
   def index
-    @circuits = Circuit.all
+    # @circuits = Circuit.all
+    @circuits = Circuit.all.order(:name)
 
     render json: @circuits
   end

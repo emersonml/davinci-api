@@ -1,4 +1,5 @@
-class CircuitsController < ApplicationController
+### teste dev:migrations
+class Api::CircuitsController < ApplicationController
   before_action :set_circuit, only: [:show, :update, :destroy]
 
   # GET /circuits
@@ -18,7 +19,7 @@ class CircuitsController < ApplicationController
     @circuit = Circuit.new(circuit_params)
 
     if @circuit.save
-      render json: @circuit, status: :created, location: @circuit
+      render json: @circuit, status: :created, location: api_circuit_path(@circuit)
     else
       render json: @circuit.errors, status: :unprocessable_entity
     end
@@ -45,7 +46,10 @@ class CircuitsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
+    # def circuit_params
+    #   params.require(:circuit).permit(:sttus, :name, :description, :compartimento_id, :kindbtn_id, :kinddev_id)
+    # end
     def circuit_params
-      params.require(:circuit).permit(:sttus, :name, :description, :compartimento_id, :kindbtn_id, :kinddev_id)
+      ActiveModelSerializers::Deserialization.jsonapi_parse(params)
     end
 end

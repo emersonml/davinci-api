@@ -51,6 +51,8 @@ rails g serializer circuit
 rails g serializer btn
 rails g serializer dev
 
+### api_patrimonio S _url(@patrimonio)
+
 <!-- SETENDO O CAMINHO DO APP PARA QUE OS LINKs DO SERIALIZERS POSSAM ENCONTRAR 
   Rails.application.routes.default_url_options = {
     host: 45.174.216.22,

@@ -1,0 +1,2 @@
+class Kinddev < ApplicationRecord
+end

@@ -10,34 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_05_041911) do
-
-  create_table "btns", force: :cascade do |t|
-    t.integer "sttus"
-    t.string "name"
-    t.integer "kindbtn_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["kindbtn_id"], name: "index_btns_on_kindbtn_id"
-  end
+ActiveRecord::Schema.define(version: 2022_09_17_032527) do
 
   create_table "circuits", force: :cascade do |t|
     t.integer "sttus"
     t.string "name"
-    t.integer "btn_id", null: false
-    t.integer "dev_id", null: false
+    t.string "description"
+    t.integer "compartimento_id", null: false
+    t.integer "kindbtn_id", null: false
+    t.integer "kinddev_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["btn_id"], name: "index_circuits_on_btn_id"
-    t.index ["dev_id"], name: "index_circuits_on_dev_id"
+    t.index ["compartimento_id"], name: "index_circuits_on_compartimento_id"
+    t.index ["kindbtn_id"], name: "index_circuits_on_kindbtn_id"
+    t.index ["kinddev_id"], name: "index_circuits_on_kinddev_id"
   end
 
-  create_table "devs", force: :cascade do |t|
-    t.integer "sttus"
+  create_table "compartimentos", force: :cascade do |t|
     t.string "name"
-    t.string "tipo"
+    t.integer "patrimonio_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["patrimonio_id"], name: "index_compartimentos_on_patrimonio_id"
   end
 
   create_table "kindbtns", force: :cascade do |t|
@@ -46,7 +40,21 @@ ActiveRecord::Schema.define(version: 2022_09_05_041911) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "btns", "kindbtns"
-  add_foreign_key "circuits", "btns"
-  add_foreign_key "circuits", "devs"
+  create_table "kinddevs", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "patrimonios", force: :cascade do |t|
+    t.string "name"
+    t.integer "tag"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  add_foreign_key "circuits", "compartimentos"
+  add_foreign_key "circuits", "kindbtns"
+  add_foreign_key "circuits", "kinddevs"
+  add_foreign_key "compartimentos", "patrimonios"
 end

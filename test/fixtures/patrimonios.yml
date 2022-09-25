@@ -1,11 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  sttus: 1
   name: MyString
-  kindbtn: one
+  tag: 1
 
 two:
-  sttus: 1
   name: MyString
-  kindbtn: two
+  tag: 1
