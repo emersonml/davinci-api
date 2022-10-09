@@ -49,7 +49,7 @@ task setup: :environment do
   end   
   puts "end    Compartimento cadastrado"
   puts ">>> Cadastrando os Kindbtn "    ### KIND BTN
-  nameKindBtns = %w(retencao pulso time)
+  nameKindBtns = %w( time toggle toggle toggle pulso toggle toggle )
   nameKindBtns.each do |namekindbtn|
     Kindbtn.create!(
       name: namekindbtn
@@ -57,24 +57,30 @@ task setup: :environment do
   end   
   puts "end    Kindbtn cadastrados"
   puts ">>> Cadastrando os Kinddev "    ### KIND DEV
-  nameKinddevs = %w(fechadura-close sirene lampada portao )
+  nameKinddevs = %w(fechadura-close lampada lampada lampada portao lampada sirene )
   nameKinddevs.each do |namekinddev|
     Kinddev.create!(
       name: namekinddev
     )
   end   
   puts "end    Kindbtn cadastrados"
+
   puts ">>> Cadastrando Circuit "  ### CIRCUITO
-2.times do |i|
-  Circuit.create!(
-    sttus: 0,
-    name: "Circuito#{i+1}",
-    description: "1 fechadura para porta de vidro da recepcao",
-    compartimento: Compartimento.first,
-    kindbtn: Kindbtn.first,
-    kinddev: Kinddev.first
-  )
-end  
+  # nameKindBtns.each do |namekindbtn|
+  7.times do |i|
+    s = i+1
+    # puts nameKinddevs[2];
+    Circuit.create!(
+      sttus: 0,
+      name: "Circuito#{s}",
+      description: "1 fechadura para porta de vidro da recepcao", 
+      kindbtn: Kindbtn.find(s), 
+      kinddev: Kinddev.find(s)
+      # kinddev: Kinddev.first
+      # kinddev: Kinddev.kinddev_id: (1)
+      # i+1
+    )
+  end # times 
 
     puts "end    Circuit cadastrado"
     puts "end    DB RESETADO."

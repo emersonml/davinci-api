@@ -65,3 +65,11 @@ yarn-debug.log*
 # Ignore uploaded files in development
 /storage/*
 !/storage/.keep
+
+
+########  DEPLOY
+/config/database.yml
+
+/config/master.key
+
+/config/credentials/development.key
