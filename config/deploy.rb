@@ -4,9 +4,9 @@ lock "~> 3.17.1"
 set :application, "davinci-api"
 set :repo_url, "https://github.com/emersonml/davinci-api.git"
 
-Default branch is :main
+# Default branch is :main
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
-
+ask :branch, 'main'
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/var/www/davinci-api"
 
