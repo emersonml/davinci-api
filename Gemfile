@@ -28,6 +28,13 @@ gem 'active_model_serializers', '~> 0.10.0'
 
 
 
+#  https://github.com/tablexi/nucore-open/pull/1578
+gem 'ed25519', '>= 1.2', '< 1.3'
+ # more info at https://github.com/net-ssh/net-ssh/issues/478
+gem "bcrypt_pbkdf", ">= 1.0", "< 2.0"
+
+
+
 group :development, :test do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

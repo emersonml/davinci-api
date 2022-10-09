@@ -22,9 +22,9 @@
 # role :db,  %w{deploy@example.com}
 
 
-role :app,  %w{deploy@45.174.216.22}
-role :web,  %w{deploy@45.174.216.22}
-role :db,   %w{deploy@45.174.216.22}
+role :app,  %w{deploy@45.174.216.22}, port: 22122
+role :web,  %w{deploy@45.174.216.22}, port: 22122
+role :db,   %w{deploy@45.174.216.22}, port: 22122
 
 
 
