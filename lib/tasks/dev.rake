@@ -27,73 +27,85 @@ end
 ######################################################################################################
 
 
-desc "Configura o ambiente de desenvolvimento"
-task setup: :environment do
-  
-  puts ">>> RESETANDO O DB"    
-    %x(rails db:drop db:create db:migrate)
+  desc "Configura o ambiente de desenvolvimento"
+  task setup: :environment do
+    if Rails.env.development?
+      show_spinner("Apagando BD...") { %x(rails db:drop) }
+      show_spinner("Criando BD...") { %x(rails db:create) }
+      show_spinner("Migrando BD...") { %x(rails db:migrate) }
+    else
+    end
 
-  puts ">>> Cadastrando o Patrimonio" ### PATRIMONIO
+    show_spinner("Cadastrando Patrimonio...") { %x(rails dev:add_patrimonio) }
+    show_spinner("Cadastrando Compartimento...") { %x(rails dev:add_compartimento) }
+    show_spinner("Cadastrando Kindbtn...") { %x(rails dev:add_kindbtn) }
+    show_spinner("Cadastrando Kinddev...") { %x(rails dev:add_kinddev) }
+    show_spinner("Cadastrando Circuit...") { %x(rails dev:add_circuit) }
+    show_spinner("Aplicando permissao de escrita...") { %x( chmod o+w -R ../davinci-api/ ) }
+
+  end#setup
+
+  desc "Adiciona o Patrimonio" #########################
+  task add_patrimonio: :environment do
   Patrimonio.create!(
     name: "5GBrasil",
     tag: 0
   )
-  puts "end    Patrimonio cadastrado"
-  puts ">>> Cadastrando o Compartimento" ### COMPARTIMENTO
-  nomecompartimentos = %w(Recepção CPD)
-  nomecompartimentos.each do |nomecompartimento|
-    Compartimento.create!(
-      name: nomecompartimento,
-      patrimonio: Patrimonio.first
-    )
-  end   
-  puts "end    Compartimento cadastrado"
-  puts ">>> Cadastrando os Kindbtn "    ### KIND BTN
-  nameKindBtns = %w( time toggle toggle toggle pulso toggle toggle )
-  nameKindBtns.each do |namekindbtn|
-    Kindbtn.create!(
-      name: namekindbtn
-    )
-  end   
-  puts "end    Kindbtn cadastrados"
-  puts ">>> Cadastrando os Kinddev "    ### KIND DEV
-  nameKinddevs = %w(fechadura-close lampada lampada lampada portao lampada sirene )
-  nameKinddevs.each do |namekinddev|
-    Kinddev.create!(
-      name: namekinddev
-    )
-  end   
-  puts "end    Kindbtn cadastrados"
+  end
 
-  puts ">>> Cadastrando Circuit "  ### CIRCUITO
-  # nameKindBtns.each do |namekindbtn|
-  7.times do |i|
-    s = i+1
-    # puts nameKinddevs[2];
-    Circuit.create!(
-      sttus: 0,
-      name: "Circuito#{s}",
-      description: "1 fechadura para porta de vidro da recepcao", 
-      kindbtn: Kindbtn.find(s), 
-      kinddev: Kinddev.find(s)
-      # kinddev: Kinddev.first
-      # kinddev: Kinddev.kinddev_id: (1)
-      # i+1
-    )
-  end # times 
+  desc "Adiciona Compartimento" #########################
+  task add_compartimento: :environment do
+    nomecompartimentos = %w(Recepção CPD)
+    nomecompartimentos.each do |nomecompartimento|
+      Compartimento.create!(
+        name: nomecompartimento,
+        patrimonio: Patrimonio.first
+      )
+    end  
+  end
 
-    puts "end    Circuit cadastrado"
-    puts "end    DB RESETADO."
+  desc "Adiciona Kindbtn" #########################
+  task add_kindbtn: :environment do
+    nameKindBtns = %w( time toggle toggle toggle pulso toggle toggle )
+    nameKindBtns.each do |namekindbtn|
+      Kindbtn.create!(
+        name: namekindbtn
+      )
+    end 
+  end
+  
+  desc "Adiciona Kinddev" #########################
+  task add_kinddev: :environment do
+    nameKinddevs = %w(fechadura-close lampada lampada lampada portao lampada sirene )
+    nameKinddevs.each do |namekinddev|
+      Kinddev.create!(
+        name: namekinddev
+      )
+    end 
+  end
 
-    %x( chmod o+w -R ../davinci-api/ )
-    puts ">>> Aplicado permissao de escrita"
-    
-  end   #populando
-end   #dev
+  desc "Adiciona Circuits" #########################
+  task add_circuit: :environment do
+    7.times do |i|
+      s = i+1
+      Circuit.create!(
+        sttus: 0,
+        name: "Circuito#{s}",
+        description: "1 fechadura para porta de vidro da recepcao", 
+        compartimento: Compartimento.first,
+        kindbtn: Kindbtn.find(s), 
+        kinddev: Kinddev.find(s)
+        # kinddev: Kinddev.first
+      )
+    end#times 
+  end#task
 
 
+  def show_spinner(msg_start, msg_end = "Concluído!")
+    spinner = TTY::Spinner.new("[:spinner] #{msg_start}")
+    spinner.auto_spin
+    yield
+    spinner.success("(#{msg_end})")    
+  end#show_spinner
 
-# EXEMPLO
-#   Hero.create name: "Hero #{i}"
-
-
+end#dev
