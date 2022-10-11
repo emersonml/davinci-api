@@ -34,9 +34,9 @@ end
       show_spinner("Apagando BD...") { %x(rails db:drop) }
       show_spinner("Criando BD...") { %x(rails db:create) }
       show_spinner("Migrando BD...") { %x(rails db:migrate) }
-    else
     end
-
+    
+    puts ">>>>>>>>>>  ENV  PRODUCTION  <<<<<<<<<<"
     show_spinner("Cadastrando Patrimonio...") { %x(rails dev:add_patrimonio) }
     show_spinner("Cadastrando Compartimento...") { %x(rails dev:add_compartimento) }
     show_spinner("Cadastrando Kindbtn...") { %x(rails dev:add_kindbtn) }
