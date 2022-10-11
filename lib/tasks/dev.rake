@@ -30,6 +30,7 @@ end
   desc "Configura o ambiente de desenvolvimento"
   task setup: :environment do
     if Rails.env.development?
+      puts ">>>>>>>>>>  ENV  DEVELOPMENT  <<<<<<<<<<"
       show_spinner("Apagando BD...") { %x(rails db:drop) }
       show_spinner("Criando BD...") { %x(rails db:create) }
       show_spinner("Migrando BD...") { %x(rails db:migrate) }
