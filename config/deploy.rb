@@ -1,6 +1,9 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.17.1"
 
+set :stages, %w(production staging)
+set :default_stage, "staging"
+
 set :application, "davinci-api"
 # set :repo_url, "https://github.com/emersonml/davinci-api.git"
 set :repo_url, "git@github.com:emersonml/davinci-api.git"
