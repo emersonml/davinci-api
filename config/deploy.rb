@@ -23,10 +23,10 @@ set :puma_enable_socket_service, true
 
 
 ###  se estiver implantando em um host no qual não possui sudo ou privilégios de root e precisa restringir o caminho.
-set :puma_user, fetch(:user)
-set :puma_role, :web
-set :puma_service_unit_env_files, []
-set :puma_service_unit_env_vars, []
+# set :puma_user, fetch(:user)
+# set :puma_role, :web
+# set :puma_service_unit_env_files, []
+# set :puma_service_unit_env_vars, []
 
 
 
@@ -69,3 +69,21 @@ set :ssh_options, {
   #     invoke ''
   #   end
   # end
+
+  namespace :puma do
+    namespace :systemd do
+      desc 'Reload the puma service via systemd by sending USR1 (e.g. trigger a zero downtime deploy)'
+      task :reload do
+        on roles(fetch(:puma_role)) do
+          if fetch(:puma_systemctl_user) == :system
+            sudo "#{fetch(:puma_systemctl_bin)} reload-or-restart #{fetch(:puma_service_unit_name)}"
+          else
+            execute "#{fetch(:puma_systemctl_bin)}", "--user", "reload", fetch(:puma_service_unit_name)
+            execute :loginctl, "enable-linger", fetch(:puma_lingering_user) if fetch(:puma_enable_lingering)
+          end
+        end
+      end
+    end
+  end
+  
+  after 'deploy:finished', 'puma:systemd:reload'
