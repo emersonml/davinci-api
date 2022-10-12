@@ -53,7 +53,7 @@ gem 'sqlite3', '~> 1.4'
   gem 'capistrano-rvm'#, require: false
   gem 'capistrano-bundler', '~> 1.5'
   gem 'capistrano-rails', '~> 1.4', require: false
-  gem 'capistrano3-puma', require: false
+  # gem 'capistrano3-puma', require: false
 end
 
 group :production do 
