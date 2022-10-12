@@ -6,8 +6,8 @@ Rails.application.configure do
 
   Rails.application.routes.default_url_options = {
     host: '45.174.216.22',
-    port: 3000
-    # port: 4151
+    # port: 3000
+    port: 4151
   }
   
   # Code is not reloaded between requests.
