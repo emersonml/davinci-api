@@ -50,14 +50,17 @@ gem 'sqlite3', '~> 1.4'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'capistrano', '~> 3.11', require: false
-  gem 'capistrano-rvm'
+  gem 'capistrano-rvm'#, require: false
   gem 'capistrano-bundler', '~> 1.5'
   gem 'capistrano-rails', '~> 1.4', require: false
+  gem 'capistrano3-puma', require: false
 end
 
 group :production do 
   # gem 'mysql2', '~> 0.3.18'
   gem 'mysql2'
+  # gem 'puma', '~> 5.0'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

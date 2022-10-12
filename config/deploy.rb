@@ -2,7 +2,8 @@
 lock "~> 3.17.1"
 
 set :stages, %w(production staging)
-set :default_stage, "staging"
+# set :default_stage, "staging"
+set :default_stage, "production"
 
 set :application, "davinci-api"
 # set :repo_url, "https://github.com/emersonml/davinci-api.git"
@@ -47,3 +48,12 @@ set :ssh_options, {
   forward_agent: true,
   port: 22122
   }
+
+  # after 'deploy:  ', 'deploy:restart'
+  
+  # namespace :deploy do
+  #   task :restart do
+  #     invoke ''
+  #     invoke ''
+  #   end
+  # end
