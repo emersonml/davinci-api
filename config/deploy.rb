@@ -56,12 +56,41 @@ set :keep_releases, 5
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+
+#### set :user = 'deploy'
+
 set :ssh_options, {
   forward_agent: true,
+  ### or    
+  ### :keys => [File.join(ENV["HOME"], ".ssh", "decwise")],
   port: 22122
   }
 
-  # after 'deploy:  ', 'deploy:restart'
+# deployment process
+
+after "deploy:update", "passenger:setup_symlinks"
+
+# tasks
+
+namespace :passenger do
+  desc "Creates a symlink for the database.yml file"
+  task :setup_symlinks, :roles => :app do
+    puts "\n\n=== Setting up symbolic links ===\n\n"
+    run "ln -s #{deploy_to}/#{shared_dir}/config/database.yml #{current_path}/config/database.yml"
+  end
+end
+
+namespace :deploy do
+  task :start do ; end
+  task :stop do ; end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+  end
+end
+
+######################################################################################
+
+# after 'deploy:  ', 'deploy:restart'
   
   # namespace :deploy do
   #   task :restart do
@@ -69,21 +98,25 @@ set :ssh_options, {
   #     invoke ''
   #   end
   # end
-
-  namespace :puma do
-    namespace :systemd do
-      desc 'Reload the puma service via systemd by sending USR1 (e.g. trigger a zero downtime deploy)'
-      task :reload do
-        on roles(fetch(:puma_role)) do
-          if fetch(:puma_systemctl_user) == :system
-            sudo "#{fetch(:puma_systemctl_bin)} reload-or-restart #{fetch(:puma_service_unit_name)}"
-          else
-            execute "#{fetch(:puma_systemctl_bin)}", "--user", "reload", fetch(:puma_service_unit_name)
-            execute :loginctl, "enable-linger", fetch(:puma_lingering_user) if fetch(:puma_enable_lingering)
-          end
-        end
-      end
-    end
-  end
   
-  after 'deploy:finished', 'puma:systemd:reload'
+
+  ######################################################################################
+
+
+  # namespace :puma do
+  #   namespace :systemd do
+  #     desc 'Reload the puma service via systemd by sending USR1 (e.g. trigger a zero downtime deploy)'
+  #     task :reload do
+  #       on roles(fetch(:puma_role)) do
+  #         if fetch(:puma_systemctl_user) == :system
+  #           sudo "#{fetch(:puma_systemctl_bin)} reload-or-restart #{fetch(:puma_service_unit_name)}"
+  #         else
+  #           execute "#{fetch(:puma_systemctl_bin)}", "--user", "reload", fetch(:puma_service_unit_name)
+  #           execute :loginctl, "enable-linger", fetch(:puma_lingering_user) if fetch(:puma_enable_lingering)
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
+  
+  # after 'deploy:finished', 'puma:systemd:reload'
