@@ -18,6 +18,18 @@ set :deploy_to, "/var/www/davinci-api"
 # Default value for :format is :airbrussh.
 set :format, :airbrussh
 
+###  A ativação do soquete do Systemd inicia seu aplicativo na primeira solicitação, se ainda não estiver em execução
+set :puma_enable_socket_service, true 
+
+
+###  se estiver implantando em um host no qual não possui sudo ou privilégios de root e precisa restringir o caminho.
+set :puma_user, fetch(:user)
+set :puma_role, :web
+set :puma_service_unit_env_files, []
+set :puma_service_unit_env_vars, []
+
+
+
 set :log_level, :debug
 
 # You can configure the Airbrussh format using :format_options.

@@ -3,6 +3,13 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+
+  Rails.application.routes.default_url_options = {
+    host: '45.174.216.22',
+    port: 3000
+    # port: 4151
+  }
+  
   # Code is not reloaded between requests.
   config.cache_classes = true
 
