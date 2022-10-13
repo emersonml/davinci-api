@@ -3,12 +3,17 @@ require "capistrano/setup"
 require "capistrano/deploy"
 require "capistrano/scm/git"
 install_plugin Capistrano::SCM::Git
+require "capistrano/rails"
 require "capistrano/rvm"
 require 'capistrano/puma'
 install_plugin Capistrano::Puma, load_hooks: false  # Default puma tasks
+install_plugin Capistrano::Puma::Workers  # if you want to control the workers (in cluster mode)
 install_plugin Capistrano::Puma::Systemd
+install_plugin Capistrano::Puma::Daemon
 require "capistrano/bundler"
 require "capistrano/rails/migrations"
+# require 'capistrano/sidekiq'
+# require 'capistrano/sidekiq/monit'
 
 # Include default deployment tasks
 # require "capistrano/rails"
