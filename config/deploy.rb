@@ -52,8 +52,11 @@ namespace :deploy do
 
   desc 'Creating symlink for config file'
   task :config_symlink do
+    puts "<<<<<<<ONDE ESTOU>>>>>>>1111111111111"
     on roles(:app) do
+      puts "<<<<<<<ONDE ESTOU>>>>>>>222222222222222"
       sudo "ln -nfs #{release_path}/config/puma_init.sh /etc/init.d/puma_#{fetch(:application)}"
+      puts "<<<<<<<ONDE ESTOU>>>>>>>333333333333"
       sudo "chmod +x /etc/init.d/puma_#{fetch(:application)}"
       execute "ln -nfs #{release_path}/config/puma.rb.example #{shared_path}/puma.rb"
       # execute "ln -sf #{shared_path}/config/database.yml #{release_path}/config/database.yml"
