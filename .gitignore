@@ -68,8 +68,6 @@ yarn-debug.log*
 
 
 ########  DEPLOY
-/config/database.yml
-
-/config/master.key
-
-/config/credentials/development.key
+#/config/database.yml
+#/config/master.key
+#/config/credentials/development.key
