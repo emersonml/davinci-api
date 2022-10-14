@@ -6,7 +6,6 @@ ruby '3.0.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.6'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -21,6 +20,9 @@ gem 'puma', '~> 5.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+
+gem 'tty-spinner'
+
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
@@ -42,19 +44,24 @@ group :development, :test do
 end
 
 group :development do
+gem 'sqlite3', '~> 1.4'
   gem 'web-console', '>= 4.1.0'
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'capistrano', '~> 3.11', require: false
-  gem 'capistrano-rvm'
+  # gem 'capistrano', '~> 3.11', require: false
+  gem 'capistrano'#, '~> 3.15.0', require: false
+  gem 'capistrano-rvm'#, require: false
   gem 'capistrano-bundler', '~> 1.5'
   gem 'capistrano-rails', '~> 1.4', require: false
+  # gem 'capistrano3-puma', require: false
 end
 
 group :production do 
   # gem 'mysql2', '~> 0.3.18'
   gem 'mysql2'
+  # gem 'puma', '~> 5.0'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

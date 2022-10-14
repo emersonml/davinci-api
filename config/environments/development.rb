@@ -6,6 +6,7 @@ Rails.application.configure do
 
   Rails.application.routes.default_url_options = {
     host: '45.174.216.22',
+    # port: 3000
     port: 4151
   }
   
