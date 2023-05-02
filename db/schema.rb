@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_17_032527) do
+ActiveRecord::Schema.define(version: 2022_10_17_035747) do
+
+  create_table "centrals", force: :cascade do |t|
+    t.string "name"
+    t.string "tipo"
+    t.integer "sttus"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "circuits", force: :cascade do |t|
     t.integer "sttus"
@@ -48,7 +56,6 @@ ActiveRecord::Schema.define(version: 2022_09_17_032527) do
 
   create_table "patrimonios", force: :cascade do |t|
     t.string "name"
-    t.integer "tag"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

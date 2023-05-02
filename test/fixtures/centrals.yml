@@ -2,6 +2,10 @@
 
 one:
   name: MyString
+  tipo: MyString
+  sttus: 1
 
 two:
   name: MyString
+  tipo: MyString
+  sttus: 1

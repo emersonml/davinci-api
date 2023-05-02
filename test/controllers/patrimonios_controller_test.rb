@@ -12,7 +12,7 @@ class PatrimoniosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create patrimonio" do
     assert_difference('Patrimonio.count') do
-      post patrimonios_url, params: { patrimonio: { name: @patrimonio.name, tag: @patrimonio.tag } }, as: :json
+      post patrimonios_url, params: { patrimonio: { name: @patrimonio.name } }, as: :json
     end
 
     assert_response 201
@@ -24,7 +24,7 @@ class PatrimoniosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update patrimonio" do
-    patch patrimonio_url(@patrimonio), params: { patrimonio: { name: @patrimonio.name, tag: @patrimonio.tag } }, as: :json
+    patch patrimonio_url(@patrimonio), params: { patrimonio: { name: @patrimonio.name } }, as: :json
     assert_response 200
   end
 

@@ -46,6 +46,6 @@ class PatrimoniosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def patrimonio_params
-      params.require(:patrimonio).permit(:name, :tag)
+      params.require(:patrimonio).permit(:name)
     end
 end
