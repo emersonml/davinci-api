@@ -1,4 +1,6 @@
+# DEV davinci-API
 Rails.application.routes.draw do
+  get 'status', to: 'application#statusx'
   
   namespace :api, defaults: { format: :json } do
 
@@ -7,9 +9,9 @@ Rails.application.routes.draw do
   resources :kindbtns
   resources :compartimentos
   resources :patrimonios
- 
-              # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
-  end
+  resources :centrals
+  
+  # root to: 'application#index'
+  end# namespace /API
 
 end

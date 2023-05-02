@@ -6,18 +6,16 @@ namespace :dev do
   task migrations: :environment do
     
     puts "Atualiza os DIR: MODEL e SERIALIZERS e ROUTER (Os controller in API nao sao afetados) "
-    puts ">>> spring storp "; %x( spring stop);  puts "end    spring storp "
-    puts ">>> ATUALIZANDO Migrates "
+    puts ">>> spring storp "; %x( spring stop);  
+    puts ">>> ATUALIZANDO Migrates <<<"
     %x(
-      rails g scaffold patrimonio name tag:integer
+      rails g scaffold central name tipo sttus:integer 
+      rails g scaffold patrimonio name
       rails g scaffold compartimento name patrimonio:references
       rails g scaffold kindbtn name 
       rails g scaffold kinddev name 
       rails g scaffold circuit sttus:integer name description compartimento:references kindbtn:references kinddev:references 
     )
-    # rails g scaffold patrimonio name
-    # rails g scaffold compartimento name patrimonio:references
-    # rails g scaffold central sttus:integer name tipo
     # rails g scaffold pino sttus:integer name tipo pinmode
     # rails g scaffold rele sttus:integer name
     # rails g scaffold circuit sttus:integer name central:references pino:references rele:references dev:references btn:references compartimento:references
@@ -28,7 +26,7 @@ end
 
 
   desc "Configura o ambiente de desenvolvimento"
-  task setup: :environment do
+  task populando_db: :environment do
     if Rails.env.development?
       puts ">>>>>>>>>>  ENV  DEVELOPMENT  <<<<<<<<<<"
       show_spinner("Apagando BD...") { %x(rails db:drop) }
@@ -37,6 +35,7 @@ end
     end
     
     puts ">>>>>>>>>>  ENV  PRODUCTION  <<<<<<<<<<"
+    show_spinner("Cadastrando Central...") { %x(rails dev:add_central) }
     show_spinner("Cadastrando Patrimonio...") { %x(rails dev:add_patrimonio) }
     show_spinner("Cadastrando Compartimento...") { %x(rails dev:add_compartimento) }
     show_spinner("Cadastrando Kindbtn...") { %x(rails dev:add_kindbtn) }
@@ -47,11 +46,19 @@ end
   end#setup
 
   desc "Adiciona o Patrimonio" #########################
+  task add_central: :environment do
+    Central.create!(
+      name: "arduino",
+      tipo: "uno",
+      sttus: 0
+    )
+  end
+
+  desc "Adiciona o Patrimonio" #########################
   task add_patrimonio: :environment do
-  Patrimonio.create!(
-    name: "5GBrasil",
-    tag: 0
-  )
+    Patrimonio.create!(
+      name: "5GBrasil"
+    )
   end
 
   desc "Adiciona Compartimento" #########################
